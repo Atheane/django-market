@@ -1,13 +1,24 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from listings.models import Band
+from listings.models import Band, Listing
 
-def bands_list(request):
+def bands(request):
     bands = Band.objects.all()
     li = ''.join(f"<li>{band.name}</li>" for band in bands)
     return HttpResponse(f"""
-            <h1>Hello Django !</h1>
+            <h1>Groupes</h1>
             <p>Mes groupes préférés sont :<p>
+            <ul>
+                {li}
+            </ul>
+    """)
+    
+def listings(request):
+    listings = Listing.objects.all()
+    li = ''.join(f"<li>{listing.title}</li>" for listing in listings)
+    return HttpResponse(f"""
+            <h1>Listings</h1>
+            <p>Mes objets préférés sont :<p>
             <ul>
                 {li}
             </ul>
