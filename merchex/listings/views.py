@@ -9,12 +9,9 @@ def bands(request):
 def listings(request):
     listings = Listing.objects.all()
     return render(request, "listings/listings.html", {"listings": listings })
-    
-def hello(request):
-    return HttpResponse('<h1>Hello Django!</h1>')
 
 def about_us(request):
-    return HttpResponse('<h1>About us</h1>')
+    return render(request, "listings/about-us.html")
 
 def help(request):
-    return HttpResponse('<h1>Help</h1><p>Please contact us at contact@merchex.com</p>')
+    return render(request, "listings/help.html")
