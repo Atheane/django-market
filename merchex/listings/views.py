@@ -5,13 +5,7 @@ from listings.models import Band, Listing
 def bands(request):
     bands = Band.objects.all()
     li = ''.join(f"<li>{band.name}</li>" for band in bands)
-    return HttpResponse(f"""
-            <h1>Groupes</h1>
-            <p>Mes groupes préférés sont :<p>
-            <ul>
-                {li}
-            </ul>
-    """)
+    return render(request, "listings/bands.html", {"bands": bands })
     
 def listings(request):
     listings = Listing.objects.all()
