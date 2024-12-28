@@ -1,6 +1,5 @@
-<html>
-    <head><title>Merchex</title></head>
-    <body>
+{% extends "listings/base.html" %}
+{% block content %}
         <h1>Hello Django !</h1>
         <p>Mes objets préférés sont :</p>
         <ul>
@@ -8,5 +7,4 @@
                 <li>{{ listing.title }}</li>
             {% endfor %}
         </ul>
-    </body>
-</html>
+{% endblock %}
