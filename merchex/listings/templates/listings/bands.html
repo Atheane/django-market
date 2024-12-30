@@ -1,6 +1,7 @@
 {% extends "listings/base.html" %}
 {% block content %}
 <h1>Hello Django !</h1>
+<p>Année en cours : {% now "Y" %} </p>
 <p>
     J'ai..
     {% if bands|length < 5 %}
