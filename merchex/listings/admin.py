@@ -9,4 +9,4 @@ class BandAdmin(admin.ModelAdmin):
     
 @admin.register(Listing)
 class ListingAdmin(admin.ModelAdmin):
-    list_display = ('title', 'type', 'sold')  
+    list_display = ('title', 'type', 'sold', "band")  
