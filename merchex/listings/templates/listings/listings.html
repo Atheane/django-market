@@ -1,10 +1,12 @@
 {% extends "listings/base.html" %}
 {% block content %}
-        <h1>Hello Django !</h1>
-        <p>Mes objets préférés sont :</p>
-        <ul>
-            {% for listing in listings %}
-                <li>{{ listing.title }}</li>
-            {% endfor %}
-        </ul>
+<nav>
+    <a href="{% url 'bands' %}">Groupes</a>
+</nav>
+    <h1>Listings :</h1>
+    <ul>
+        {% for listing in listings %}
+            <li><a href="{% url 'listing-detail' listing.id %}">{{ listing.title }}</a></li>
+        {% endfor %}
+    </ul>
 {% endblock %}

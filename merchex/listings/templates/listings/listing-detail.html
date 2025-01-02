@@ -1,0 +1,21 @@
+{% extends "listings/base.html" %}
+{% block content %}
+<nav>
+    <a href="{% url 'listings' %}">Listings</a>
+</nav>
+{% if listing.band %}
+<h1>Listing pour le groupe {{ listing.band }} </h1>
+{% else %}
+<h1>Listing</h1>
+{% endif %}
+<ul>
+    <li>Titre : {{ listing.title }}</li>
+    {% if listing.description %}
+    <li>Description : {{ listing.description }}</li>
+    {% endif %}
+    {% if listing.year %}
+    <li>Date: {{ listing.year }}</li>
+    {% endif %}
+    <li>Type : {{ listing.get_type_display }}</li>
+</ul>
+{% endblock %}

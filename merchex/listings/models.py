@@ -17,7 +17,7 @@ class Band(models.Model):
         INDIE_ROCK = 'IR'
     def __str__(self):
         return f'{self.name}'
-    name = models.fields.CharField(max_length=10)
+    name = models.fields.CharField(max_length=50)
     genre = models.fields.CharField(choices=Genre.choices, default=Genre.HIP_HOP, max_length=2, verbose_name="Genre")
     biography = models.fields.CharField(default='', max_length=1000)
     year_formed = models.fields.IntegerField(
