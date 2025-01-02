@@ -11,9 +11,9 @@
     {% if band.official_homepage %}
     <li><a href="{{ band.official_homepage }}" target="blank">Site officiel</a></li>
     {% endif %}
-    <!-- {% if listing %}
-    <li><a href="{% url 'listings' %}" target="blank">Listing</a></li>
-    {% endif %} -->
+    {% if listing %}
+    <li><a href="{% url 'listing-band' band.id %}" target="blank">Listing de {{ band.name }}</a></li>
+    {% endif %}
 </ul>
 <p>{{ band.biography }}</p>
 {% endblock %}

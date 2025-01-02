@@ -26,4 +26,5 @@ urlpatterns = [
     path("bands/<int:id>/", views.band_detail, name="band-detail"),
     path("listings/", views.listings, name="listings"),
     path("listings/<int:id>/", views.listing_detail, name="listing-detail"),
+    path("listing-band/<int:id>/", views.listing_band, name="listing-band"),
 ]
