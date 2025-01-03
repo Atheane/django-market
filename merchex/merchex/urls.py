@@ -31,8 +31,9 @@ urlpatterns = [
     path("bands/<int:id>/delete", views.band_delete, name="band-delete"),
     # Listing
     path("listings/", views.listings, name="listings"),
+    path("listings/add/", views.listing_create, name="listing-create"),
     path("listings/<int:id>/", views.listing_detail, name="listing-detail"),
     path("listing-band/<int:id>/", views.listing_band, name="listing-band"),
-    path("listings/add/", views.listing_create, name="listing-create"),
     path("listings/<int:id>/change", views.listing_update, name="listing-change"),
+    path("listings/<int:id>/delete", views.listing_delete, name="listing-delete"),
 ]

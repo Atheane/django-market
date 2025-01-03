@@ -6,6 +6,27 @@ from listings.models import Band, Listing
 from listings.forms import ContactUsForm, BandForm, ListingForm
 from django.core.mail import send_mail
 
+def about_us(request):
+    return render(request, "listings/about-us.html")
+
+def contact(request):
+    if request.method == "POST":
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            send_mail(
+                subject=f'Message from {form.cleaned_data["name"] or "anonyme"} via MerchEx Contact Us form',
+                message=form.cleaned_data['message'],
+                from_email=form.cleaned_data['email'],
+                recipient_list=['admin@merchex.xyz'],
+            )
+            return redirect('email-sent')  # ajoutez cette instruction de retour
+    else:
+        form = ContactUsForm()
+    return render(request, "listings/contact.html", { "form": form })
+
+def email_sent(request):
+    return render(request, "listings/email-sent.html")
+
 def bands(request):
     bands = Band.objects.all()
     return render(request, "listings/band-list.html", { "bands": bands })
@@ -28,7 +49,7 @@ def band_create(request):
         form = BandForm()
     return render(request,
             'listings/band-create.html',
-            {'form': form})
+            { 'form': form })
     
 def band_update(request, id):
     band = Band.objects.get(id=id)
@@ -43,7 +64,7 @@ def band_update(request, id):
         form = BandForm(instance=band)
     return render(request,
             'listings/band-update.html',
-            {'form': form})
+            { 'form': form })
     
 def band_delete(request, id):
     band = Band.objects.get(id=id)
@@ -52,7 +73,7 @@ def band_delete(request, id):
         return redirect('bands')
     return render(request,
            'listings/band-delete.html',
-           {'band': band})
+           { 'band': band })
     
 def listings(request):
     listings = Listing.objects.all()
@@ -94,25 +115,13 @@ def listing_update(request, id):
         form = ListingForm(instance=listing)
     return render(request,
             'listings/listing-update.html',
-            {'form': form})
-
-def about_us(request):
-    return render(request, "listings/about-us.html")
-
-def contact(request):
-    if request.method == "POST":
-        form = ContactUsForm(request.POST)
-        if form.is_valid():
-            send_mail(
-                subject=f'Message from {form.cleaned_data["name"] or "anonyme"} via MerchEx Contact Us form',
-                message=form.cleaned_data['message'],
-                from_email=form.cleaned_data['email'],
-                recipient_list=['admin@merchex.xyz'],
-            )
-            return redirect('email-sent')  # ajoutez cette instruction de retour
-    else:
-        form = ContactUsForm()
-    return render(request, "listings/contact.html", { "form": form })
-
-def email_sent(request):
-    return render(request, "listings/email-sent.html")
+            { 'form': form })
+    
+def listing_delete(request, id):
+    listing = Listing.objects.get(id=id)
+    if request.method == 'POST':
+        listing.delete()
+        return redirect('listings')
+    return render(request,
+           'listings/listing-delete.html',
+           { 'listing': listing })

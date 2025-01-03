@@ -1,6 +1,7 @@
 {% extends "listings/base.html" %}
 {% block content %}
 <a href="{% url 'listing-change' listing.id %}">Modifier le listing</a>
+<a href="{% url 'listing-delete' listing.id %}">Supprimer le listing</a>
 {% if listing.band %}
 <h1>Listing pour le groupe {{ listing.band }} </h1>
 {% else %}
