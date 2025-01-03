@@ -3,7 +3,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from listings.models import Band, Listing
-from listings.forms import ContactUsForm
+from listings.forms import ContactUsForm, BandForm
 from django.core.mail import send_mail
 
 def bands(request):
@@ -14,6 +14,21 @@ def band_detail(request, id):
     band = Band.objects.get(id=id)
     listing = Listing.objects.filter(band=id)
     return render(request, "listings/band-detail.html", { "band": band, "listing": listing })
+
+def band_create(request):
+    if request.method == 'POST':
+        form = BandForm(request.POST)
+        if form.is_valid():
+            # créer une nouvelle « Band » et la sauvegarder dans la db
+            band = form.save()
+            # redirige vers la page de détail du groupe que nous venons de créer
+            # nous pouvons fournir les arguments du motif url comme arguments à la fonction de redirection
+            return redirect('band-detail', band.id)
+    else:
+        form = BandForm()
+    return render(request,
+            'listings/band-create.html',
+            {'form': form})
     
 def listings(request):
     listings = Listing.objects.all()
@@ -31,8 +46,6 @@ def about_us(request):
     return render(request, "listings/about-us.html")
 
 def contact(request):
-    print('La méthode de requête est : ', request.method)
-    print('Les données POST sont : ', request.POST)
     if request.method == "POST":
         form = ContactUsForm(request.POST)
         if form.is_valid():

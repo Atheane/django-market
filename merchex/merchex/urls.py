@@ -26,7 +26,7 @@ urlpatterns = [
     # Band
     path("bands/", views.bands, name="bands"),
     path("bands/<int:id>/", views.band_detail, name="band-detail"),
-    path("bands/add/", views.add_band, name="band-create"),
+    path("bands/add/", views.band_create, name="band-create"),
     # Listing
     path("listings/", views.listings, name="listings"),
     path("listings/<int:id>/", views.listing_detail, name="listing-detail"),
