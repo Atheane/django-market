@@ -45,6 +45,15 @@ def band_update(request, id):
             'listings/band-update.html',
             {'form': form})
     
+def band_delete(request, id):
+    band = Band.objects.get(id=id)
+    if request.method == 'POST':
+        band.delete()
+        return redirect('bands')
+    return render(request,
+           'listings/band-delete.html',
+           {'band': band})
+    
 def listings(request):
     listings = Listing.objects.all()
     return render(request, "listings/listings.html", { "listings": listings })
