@@ -3,7 +3,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from listings.models import Band, Listing
-from listings.forms import ContactUsForm, BandForm
+from listings.forms import ContactUsForm, BandForm, ListingForm
 from django.core.mail import send_mail
 
 def bands(request):
@@ -30,6 +30,21 @@ def band_create(request):
             'listings/band-create.html',
             {'form': form})
     
+def band_update(request, id):
+    band = Band.objects.get(id=id)
+    if request.method == 'POST':
+        form = BandForm(request.POST, instance=band)
+        if form.is_valid():
+            # mettre à jour le groupe existant dans la base de données
+            form.save()
+            # rediriger vers la page détaillée du groupe que nous venons de mettre à jour
+            return redirect('band-detail', band.id)
+    else:
+        form = BandForm(instance=band)
+    return render(request,
+            'listings/band-update.html',
+            {'form': form})
+    
 def listings(request):
     listings = Listing.objects.all()
     return render(request, "listings/listings.html", { "listings": listings })
@@ -41,6 +56,36 @@ def listing_band(request, id):
 def listing_detail(request, id):
     listing = Listing.objects.get(id=id)
     return render(request, "listings/listing-detail.html", { "listing": listing })
+
+def listing_create(request):
+    if request.method == 'POST':
+        form = ListingForm(request.POST)
+        if form.is_valid():
+            # créer une nouvelle « Band » et la sauvegarder dans la db
+            listing = form.save()
+            # redirige vers la page de détail du groupe que nous venons de crtéer
+            # nous pouvons fournir les arguments du motif url comme arguments à la fonction de redirection
+            return redirect('listing-detail', listing.id)
+    else:
+        form = ListingForm()
+    return render(request,
+            'listings/listing-create.html',
+            { 'form': form })
+
+def listing_update(request, id):
+    listing = Listing.objects.get(id=id)
+    if request.method == 'POST':
+        form = ListingForm(request.POST, instance=listing)
+        if form.is_valid():
+            # mettre à jour le groupe existant dans la base de données
+            form.save()
+            # rediriger vers la page détaillée du groupe que nous venons de mettre à jour
+            return redirect('listing-detail', listing.id)
+    else:
+        form = ListingForm(instance=listing)
+    return render(request,
+            'listings/listing-update.html',
+            {'form': form})
 
 def about_us(request):
     return render(request, "listings/about-us.html")

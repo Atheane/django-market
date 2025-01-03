@@ -1,7 +1,7 @@
 # listings/forms.py
 from django import forms
 from django.core.validators import MinValueValidator, MaxValueValidator
-from listings.models import Band
+from listings.models import Band, Listing
 
 class ContactUsForm(forms.Form):
    name = forms.CharField(required=False)
@@ -10,6 +10,12 @@ class ContactUsForm(forms.Form):
    
 
 class BandForm(forms.ModelForm):
-   class Meta:
-     model = Band
-     fields = '__all__'
+    class Meta:
+        model = Band
+        exclude = ('active', 'official_homepage')  # ajoutez cette ligne
+        
+        
+class ListingForm(forms.ModelForm):
+    class Meta:
+        model = Listing
+        exclude = ('sold', 'band')
