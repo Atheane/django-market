@@ -1,8 +1,5 @@
 {% extends "listings/base.html" %}
 {% block content %}
-<nav>
-    <a href="{% url 'listings' %}">Listings</a>
-</nav>
 {% if listing.band %}
 <h1>Listing pour le groupe {{ listing.band }} </h1>
 {% else %}
